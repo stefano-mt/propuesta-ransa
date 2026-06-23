@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title>FutureLab × Ransa — Hoja de Ruta Torre de Control Inteligente</title>
+<style>
+:root{
+  --rosa:#E61A4F;--gris:#7d8493;--negro:#000000;--naranja:#ED7737;--amarillo:#FFCD00;--verde:#6CC24A;--celeste:#00B5E2;--azul:#012169;--morado:#9900CC;--bg:#f0f2f8;--white:#ffffff;--sw:270px;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;font-family:'Poppins','Segoe UI',Arial,sans-serif;font-size:13px;background:var(--bg);color:#1a1a2e;}
+p{font-size:13px;line-height:1.82;color:#333;font-weight:400;margin-bottom:12px;}
+strong{font-weight:700;color:var(--azul);}
+.sidebar{position:fixed;top:0;left:0;width:var(--sw);height:100vh;background:var(--azul);display:flex;flex-direction:column;z-index:200;overflow:hidden;}
+.sb-brand{padding:22px 20px 18px;border-bottom:1px solid rgba(255,255,255,.1);flex-shrink:0;}
+.sb-logo-card{background:transparent;border-radius:0;padding:0;box-shadow:none;}
+.sb-logo-card img{width:100%;height:auto;display:block;}
+.sb-client{margin-top:14px;padding:12px;background:rgba(255,255,255,.06);border-radius:10px;border:1px solid rgba(255,255,255,.1);}
+.sb-client-label{font-size:9px;font-weight:700;color:rgba(255,255,255,.42);text-transform:uppercase;letter-spacing:1.5px;}
+.sb-client-name{font-size:14px;font-weight:800;color:var(--celeste);margin-top:3px;}
+.sb-client-date{font-size:10px;font-weight:300;color:rgba(255,255,255,.5);margin-top:3px;}
+.sb-nav{flex:1;overflow-y:auto;padding:8px 0;}
+.sb-nav::-webkit-scrollbar{width:3px;}
+.sb-nav::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px;}
+.nav-group-label{font-size:8.5px;font-weight:800;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,.26);padding:14px 20px 4px;}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;color:rgba(255,255,255,.68);font-size:12px;font-weight:400;border-left:3px solid transparent;transition:all .15s;user-select:none;}
+.nav-item:hover{color:white;background:rgba(255,255,255,.06);}
+.nav-item.active{color:white;font-weight:650;background:rgba(230,26,79,.18);border-left-color:var(--rosa);}
+.nav-item .ni-num{width:21px;height:21px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;flex-shrink:0;}
+.nav-item.active .ni-num{background:var(--rosa);}
+.nav-item .ni-label{flex:1;line-height:1.25;}
+.sb-footer{padding:15px 20px;border-top:1px solid rgba(255,255,255,.1);flex-shrink:0;}
+.sb-version{font-size:10px;color:rgba(255,255,255,.35);font-weight:300;line-height:1.45;}
+.sb-version strong{color:rgba(255,255,255,.65);}
+.main{margin-left:var(--sw);min-height:100vh;}
+.section{display:none;padding:40px 48px;min-height:100vh;animation:fadeIn .28s ease;}
+.section.active{display:block;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.eyebrow{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:2.5px;color:var(--rosa);margin-bottom:4px;}
+.section-title{font-size:30px;font-weight:850;color:var(--azul);line-height:1.15;letter-spacing:-.5px;max-width:850px;}
+.divider{width:52px;height:4px;background:var(--rosa);border-radius:2px;margin:14px 0 28px;}
+.row{display:flex;gap:20px;}
+.grid1{display:grid;grid-template-columns:1fr;gap:0;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.mb8{margin-bottom:8px;}.mb16{margin-bottom:16px;}.mb24{margin-bottom:24px;}.mb32{margin-bottom:32px;}.mt24{margin-top:24px;}
+.card{background:white;border-radius:15px;padding:24px;box-shadow:0 2px 16px rgba(1,33,105,.075);}
+.card-top-rosa{border-top:4px solid var(--rosa);}.card-top-celeste{border-top:4px solid var(--celeste);}.card-top-verde{border-top:4px solid var(--verde);}.card-top-naranja{border-top:4px solid var(--naranja);}.card-top-morado{border-top:4px solid var(--morado);}.card-top-azul{border-top:4px solid var(--azul);}
+.card-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--gris);margin-bottom:6px;}
+.card-value{font-size:42px;font-weight:850;color:var(--azul);line-height:1;}
+.card-desc{font-size:11px;font-weight:300;color:var(--gris);margin-top:6px;line-height:1.6;}
+.hero{background:var(--azul);background-size:cover;background-position:center;color:white;border-radius:22px;padding:34px 42px;margin-bottom:28px;position:relative;overflow:hidden;box-shadow:0 8px 38px rgba(1,33,105,.18);}
+.hero::after{content:'';position:absolute;right:-80px;bottom:-80px;width:260px;height:260px;border-radius:50%;background:rgba(230,26,79,.16);}
+.hero-brand-row{display:flex;align-items:center;justify-content:flex-start;gap:16px;margin-bottom:26px;position:relative;z-index:1;}
+.hero-logo-box{background:transparent;border-radius:0;padding:0;max-width:210px;box-shadow:none;}
+.hero-logo-box img{display:block;width:100%;}
+.hero-badge{display:inline-block;background:var(--rosa);color:white;font-size:9px;font-weight:800;padding:4px 12px;border-radius:20px;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:14px;position:relative;z-index:1;}
+.hero-title{font-size:30px;font-weight:850;line-height:1.18;max-width:650px;position:relative;z-index:1;}
+.hero-sub{font-size:13px;font-weight:300;color:rgba(255,255,255,.78);margin-top:10px;max-width:650px;line-height:1.7;position:relative;z-index:1;}
+.hero-meta{display:flex;gap:26px;margin-top:24px;flex-wrap:wrap;position:relative;z-index:1;}
+.hm-item{font-size:11px;color:rgba(255,255,255,.65);font-weight:300;}
+.hm-item strong{display:block;font-size:14px;font-weight:800;color:white;}
+.scope-panel{background:white;border-radius:14px;padding:20px 22px;box-shadow:0 2px 16px rgba(1,33,105,.075);border-top:4px solid var(--rosa);}
+.scope-panel:nth-child(2){border-top-color:var(--celeste);}.scope-panel:nth-child(3){border-top-color:var(--verde);}
+.scope-kicker{font-size:26px;font-weight:850;color:var(--azul);line-height:1;margin-bottom:8px;}
+.scope-title{font-size:13px;font-weight:800;color:var(--azul);line-height:1.35;}
+.scope-desc{font-size:11px;color:var(--gris);font-weight:300;margin-top:7px;}
+.frente-tabs{display:flex;gap:8px;flex-wrap:wrap;}
+.ftab{padding:8px 17px;border-radius:24px;border:2px solid #e0e4ef;font-size:12px;font-weight:700;cursor:pointer;color:var(--gris);transition:all .18s;background:white;}
+.ftab:hover{border-color:var(--azul);color:var(--azul);}
+.ftab.active{background:var(--azul);border-color:var(--azul);color:white;}
+.phase-panel{display:none;animation:fadeIn .2s ease;}
+.phase-panel.active{display:block;}
+.phase-title{font-size:14px;font-weight:850;color:var(--azul);margin-bottom:12px;}
+.box-note{background:rgba(255,205,0,.09);border-left:4px solid var(--amarillo);border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+.box-note p{margin-bottom:0;}
+.box-label{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:8px;}
+.bl-amarillo{color:#6b5500;}.bl-rosa{color:var(--rosa);}.bl-azul{color:var(--azul);}.bl-verde{color:#3a7d1e;}
+.bullet-list{list-style:none;padding:0;margin:0;}
+.bullet-list li{display:flex;gap:9px;font-size:12.5px;font-weight:400;color:#333;margin-bottom:8px;line-height:1.65;align-items:flex-start;}
+.bullet-list li::before{flex-shrink:0;font-weight:850;margin-top:0;}
+.bullet-list.deliver li::before{content:'→';color:var(--rosa);}
+.bullet-list.results li::before{content:'✓';color:var(--verde);}
+.bullet-list.check li::before{content:'·';color:var(--celeste);font-size:20px;line-height:1;}
+.table-scroll{width:100%;overflow-x:auto;border-radius:12px;}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;background:white;}
+.tbl th{background:var(--azul);color:white;padding:11px 14px;text-align:left;font-weight:750;font-size:10.5px;text-transform:uppercase;letter-spacing:.8px;line-height:1.25;}
+.tbl td{padding:12px 14px;border-bottom:1px solid #eef0f6;color:#333;vertical-align:top;line-height:1.55;}
+.tbl tr:hover td{background:#fafbff;}
+.tbl.rosa-head th{background:var(--rosa);}
+.tbl.celeste-head th{background:var(--celeste);}
+.tbl.roadmap-table{min-width:980px;}
+.cell-list{margin:0;padding-left:18px;}
+.cell-list li{margin-bottom:6px;line-height:1.48;}
+.cell-list li:last-child{margin-bottom:0;}
+.timeline{position:relative;padding-left:44px;}
+.timeline::before{content:'';position:absolute;left:16px;top:4px;bottom:4px;width:2px;background:#dfe4f0;}
+.tl-item{position:relative;margin-bottom:20px;}
+.tl-dot{position:absolute;left:-44px;top:0;width:32px;height:32px;border-radius:50%;background:var(--azul);color:white;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:850;border:3px solid var(--bg);}
+.tl-card{background:white;border-radius:12px;padding:16px 20px;box-shadow:0 2px 10px rgba(1,33,105,.07);border-left:4px solid var(--rosa);}
+.tl-phase{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--rosa);margin-bottom:3px;}
+.tl-title{font-size:14px;font-weight:850;color:var(--azul);}
+.tl-desc{font-size:12px;color:#555;font-weight:300;line-height:1.65;margin-top:6px;}
+.tl-result{font-size:11px;font-weight:700;color:#3a7d1e;margin-top:6px;}
+.price-card{background:white;border-radius:20px;padding:34px;box-shadow:0 8px 36px rgba(1,33,105,.14);border:2.5px solid var(--rosa);position:relative;overflow:hidden;}
+.price-ribbon{display:inline-block;background:var(--rosa);color:white;font-size:9px;font-weight:800;letter-spacing:1px;padding:6px 12px;border-radius:999px;text-transform:uppercase;margin-bottom:14px;}
+.price-amount{font-size:56px;font-weight:850;color:var(--azul);line-height:1;}
+.price-currency{font-size:22px;font-weight:500;vertical-align:top;margin-top:9px;display:inline-block;margin-right:4px;}
+.price-period{font-size:13px;font-weight:300;color:var(--gris);margin-top:4px;margin-bottom:18px;}
+.price-feat{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid #eef0f6;}
+.price-feat-check{color:var(--verde);font-weight:850;font-size:15px;flex-shrink:0;margin-top:1px;}
+.price-feat-text{font-size:12px;color:#333;line-height:1.6;}
+.badge{display:inline-block;border-radius:999px;padding:5px 11px;font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1px;background:rgba(0,181,226,.12);color:var(--azul);border:1px solid rgba(0,181,226,.28);}
+.release-step{position:relative;min-height:210px;}
+.release-num{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--azul);color:white;font-size:16px;font-weight:850;margin-bottom:14px;}
+.release-step::after{content:'';position:absolute;right:-20px;top:44px;width:20px;height:3px;background:#dfe4f0;}
+.release-step:last-child::after{display:none;}
+.wire-path{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;align-items:stretch;}
+.wire-node{border:1px solid #e4e8f2;background:#fafbff;border-radius:10px;padding:12px;min-height:74px;display:flex;flex-direction:column;justify-content:center;}
+.wire-node strong{font-size:12px;line-height:1.35;}
+.wire-node span{font-size:10.5px;color:var(--gris);line-height:1.45;margin-top:4px;}
+.continuity-band{border:1px dashed rgba(1,33,105,.35);background:rgba(0,181,226,.06);border-radius:14px;padding:20px 22px;}
+@media(max-width:1100px){:root{--sw:230px;}.section{padding:32px;}.grid3{grid-template-columns:1fr 1fr;}.grid2{grid-template-columns:1fr;}.wire-path{grid-template-columns:1fr 1fr;}.release-step::after{display:none;}}
+@media(max-width:820px){:root{--sw:0px;}body{overflow-x:hidden;}.sidebar{position:sticky;top:0;width:100%;height:auto;max-height:none;overflow:visible;box-shadow:0 8px 24px rgba(1,33,105,.18);}.sb-brand{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 14px;}.sb-logo-card{max-width:150px;padding:0;}.sb-client{margin-top:0;padding:8px 10px;min-width:135px;}.sb-client-label,.sb-client-date{display:none;}.sb-client-name{font-size:12px;margin-top:0;white-space:nowrap;}.sb-nav{display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;flex:none;padding:8px 12px 10px;}.nav-group-label{display:none;}.nav-item{flex:0 0 auto;gap:7px;padding:8px 11px;border-left:0;border-radius:999px;background:rgba(255,255,255,.08);font-size:11px;}.nav-item.active{background:var(--rosa);}.nav-item .ni-num{width:18px;height:18px;font-size:8px;background:rgba(255,255,255,.16);}.nav-item.active .ni-num{background:rgba(255,255,255,.22);}.nav-item .ni-label{white-space:nowrap;}.sb-footer{display:none;}.main{margin-left:0;}.section{padding:26px 22px;min-height:auto;}.hero{padding:26px 22px;}.hero-title{font-size:24px;}.hero-brand-row{align-items:flex-start;}.section-title{font-size:25px;}}
+@media(max-width:640px){html,body{font-size:12px;}.section{padding:20px 14px;}.grid2,.grid3{grid-template-columns:1fr;}.wire-path{grid-template-columns:1fr;}.card,.price-card{padding:18px;border-radius:13px;}.hero{border-radius:16px;}.hero-logo-box{max-width:165px;}.hero-meta{gap:14px;}.hm-item{flex:1 1 120px;}.price-amount{font-size:40px;}.price-currency{font-size:17px;}.card-value{font-size:34px;}.tl{padding-left:34px;}.timeline::before{left:12px;}.tl-dot{left:-34px;width:27px;height:27px;font-size:9px;}}
+</style>
+</head>
+<body>
+<nav class='sidebar'>
+  <div class='sb-brand'>
+    <div class='sb-logo-card'><img src='logo-futurelab.png' alt='Logo FutureLab'></div>
+    <div class='sb-client'>
+      <div class='sb-client-label'>Cliente</div>
+      <div class='sb-client-name'>Ransa</div>
+      <div class='sb-client-date'>23.06.2026 · Propuesta comercial</div>
+    </div>
+  </div>
+  <div class='sb-nav' id='sbNav'>
+    <div class='nav-group-label'>Propuesta</div>
+    <div class='nav-item active' data-tab='resumen'><span class='ni-num'>01</span><span class='ni-label'>Resumen ejecutivo</span></div>
+    <div class='nav-item' data-tab='reto'><span class='ni-num'>02</span><span class='ni-label'>Entendimiento del reto</span></div>
+    <div class='nav-item' data-tab='objetivo'><span class='ni-num'>03</span><span class='ni-label'>Objetivo</span></div>
+    <div class='nav-item' data-tab='principios'><span class='ni-num'>04</span><span class='ni-label'>Principios de diseño</span></div>
+    <div class='nav-item' data-tab='vision'><span class='ni-num'>05</span><span class='ni-label'>Visión objetivo</span></div>
+    <div class='nav-group-label'>Hoja de ruta</div>
+    <div class='nav-item' data-tab='ruta'><span class='ni-num'>06</span><span class='ni-label'>Hoja de ruta</span></div>
+    <div class='nav-item' data-tab='producto'><span class='ni-num'>07</span><span class='ni-label'>Modelo comercial y releases</span></div>
+    <div class='nav-item' data-tab='fases123'><span class='ni-num'>08</span><span class='ni-label'>Fases I, II y III</span></div>
+    <div class='nav-item' data-tab='fases456'><span class='ni-num'>09</span><span class='ni-label'>Fases IV, V y VI</span></div>
+    <div class='nav-item' data-tab='casos'><span class='ni-num'>10</span><span class='ni-label'>Casos de uso</span></div>
+    <div class='nav-item' data-tab='entregables'><span class='ni-num'>11</span><span class='ni-label'>Informes por fase</span></div>
+    <div class='nav-item' data-tab='cronograma'><span class='ni-num'>12</span><span class='ni-label'>Cronograma</span></div>
+    <div class='nav-group-label'>Comercial</div>
+    <div class='nav-item' data-tab='inversion'><span class='ni-num'>13</span><span class='ni-label'>Inversión</span></div>
+    <div class='nav-item' data-tab='compromisos'><span class='ni-num'>14</span><span class='ni-label'>Compromisos</span></div>
+    <div class='nav-item' data-tab='exclusiones'><span class='ni-num'>15</span><span class='ni-label'>Exclusiones</span></div>
+  </div>
+  <div class='sb-footer'>
+    <div class='sb-version'>Propuesta comercial<br><strong>Hoja de Ruta – Torre de Control Inteligente</strong></div>
+  </div>
+</nav>
+<main class='main'>
+
+<section class='section active' id='tab-resumen'>
+  <div class='hero' style="background-image:linear-gradient(110deg, rgba(1,33,105,.96) 0%, rgba(1,33,105,.88) 48%, rgba(230,26,79,.28) 100%), url('data:image/jpeg;base64,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');">
+    <div class='hero-brand-row'>
+      <div class='hero-logo-box'><img src='logo-futurelab.png' alt='FutureLab'></div>
+    </div>
+    <div class='hero-badge'>Propuesta comercial</div>
+    <div class='hero-title'>Hoja de Ruta – Torre de Control Inteligente</div>
+    <div class='hero-sub'>Evolución operativa y habilitación progresiva de un servicio comercializable para Ransa · 23.06.2026</div>
+    <div class='hero-meta'>
+      <div class='hm-item'><strong>Ransa</strong>Cliente</div>
+      <div class='hm-item'><strong>23.06.2026</strong>Fecha</div>
+      <div class='hm-item'><strong>Fases I – III</strong>Alcance cotizado</div>
+      <div class='hm-item'><strong>USD 12,000 + IGV</strong>Inversión</div>
+    </div>
+  </div>
+
+  <div class='grid3 mb24'>
+    <div class='card card-top-rosa'><div class='card-label'>Alcance cotizado</div><div class='card-value'>7</div><div class='card-desc'>semanas</div></div>
+    <div class='card card-top-celeste'><div class='card-label'>Ciclo completo referencial</div><div class='card-value'>18–20</div><div class='card-desc'>semanas</div></div>
+    <div class='card card-top-verde'><div class='card-label'>Hoja de ruta</div><div class='card-value'>6</div><div class='card-desc'>etapas</div></div>
+  </div>
+
+  <div class='card card-top-azul mb24'>
+    <div class='card-label mb8'>1. Resumen ejecutivo</div>
+    <p>Ransa viene evaluando la evolución de su Torre de Control hacia un modelo operativo más estandarizado, automatizado y escalable. La necesidad central es reducir la dependencia del monitoreo manual de unidades, páginas, GPS, reportes y sistemas de clientes, para migrar hacia una gestión por alertas, excepciones y decisiones operativas soportadas en datos.</p>
+    <p>La hoja de ruta propuesta por FutureLab suma una segunda dimensión: habilitar progresivamente un servicio de Torre de Control comercializable para nuevos clientes, con un núcleo común, parámetros configurables y límites claros entre estándar, configuración y desarrollo especial. El enfoque no consiste en diseñar una solución distinta por cliente, sino en validar un producto multicliente que pueda evolucionar por releases.</p>
+    <p>La presente propuesta cotiza únicamente las Fases I, II y III: Kick-off &amp; Gobierno del Proyecto, Diagnóstico &amp; Mapeo de Procesos, y Dimensionamiento de Negocio y Técnico. Las fases posteriores de Propuesta Técnico-Económica, desarrollo por releases y transferencia se presentan como continuidad referencial y serán dimensionadas luego de validar procesos, datos, integraciones, prioridades y alcance técnico.</p>
+  </div>
+
+  <div class='grid2 mb24'>
+    <div class='card card-top-celeste'>
+      <div class='card-label mb8'>Primera versión utilizable</div>
+      <p><strong>Time-to-value mediante releases.</strong> Diseñar una primera versión utilizable y priorizada, seguida de releases incrementales, sin esperar al cierre del ciclo completo para generar valor operativo y comercial.</p>
+    </div>
+    <div class='card card-top-verde'>
+      <div class='card-label mb8'>Catálogo estandarizado A/B/C</div>
+      <p><strong>Producto comercializable.</strong> Definir un núcleo común de Torre de Control y una hipótesis de servicios A/B/C, configurables según nivel de control, trazabilidad y criticidad, a validar durante las Fases II y III.</p>
+    </div>
+  </div>
+
+  <div class='box-note mb24'>
+    <div class='box-label bl-amarillo'>Alcance y primer uso</div>
+    <p>El ciclo completo referencial no equivale al tiempo hasta el primer uso. La fecha, alcance e inversión del primer release se definirán en la Propuesta Técnico-Económica posterior.</p>
+  </div>
+
+  <div class='grid3'>
+    <div class='scope-panel'><div class='scope-kicker'>I</div><div class='scope-title'>Kick-off & Gobierno del Proyecto</div><div class='scope-desc'>Cotizado</div></div>
+    <div class='scope-panel'><div class='scope-kicker'>II</div><div class='scope-title'>Diagnóstico & Mapeo de Procesos</div><div class='scope-desc'>Cotizado</div></div>
+    <div class='scope-panel'><div class='scope-kicker'>III</div><div class='scope-title'>Dimensionamiento de Negocio y Técnico</div><div class='scope-desc'>Cotizado</div></div>
+  </div>
+</section>
+
+<section class='section' id='tab-reto'>
+
+  <div class='eyebrow'>Sección 02</div>
+  <div class='section-title'>2. Entendimiento del reto</div>
+  <div class='divider'></div>
+
+  <div class='card card-top-azul mb24'>
+    <p>La Torre de Control de Ransa opera actualmente como un centro de monitoreo y gestión logística para distintos frentes de negocio. El levantamiento preliminar identificó contextos operativos con niveles de madurez, integración y complejidad distintos, pero con un reto común: lograr visibilidad, control operativo y capacidad de reacción sin depender de revisión manual unidad por unidad.</p>
+  </div>
+  <div class='mb24'>
+    <div class='card-label mb16'>Frentes operativos</div>
+    <div class='table-scroll'><table class='tbl rosa-head'>
+<thead><tr>
+<th>Frente operativo</th>
+<th>Situación identificada</th>
+<th>Implicancia para la hoja de ruta</th>
+</tr></thead>
+<tbody><tr>
+<td><strong>Extractivos / Servicios Mineros</strong></td>
+<td>Transporte pesado minero, combinación de flota propia y tercera, control de Plan de Ruta, telemetría y reportería recurrente. El reporte de flota propia se actualiza varias veces al día y consume tiempo operativo.</td>
+<td>Debe analizarse como uno de los casos con mayor valor potencial por automatización, control de ruta y gestión de eventos críticos.</td>
+</tr>
+<tr>
+<td><strong>CBC</strong></td>
+<td>Operación con alta proporción de flota propia, foco en entregas, telemetría, OTIF y gestión de distribución.</td>
+<td>Permite validar patrones de operación con mejor disponibilidad de datos y mayor potencial de gestión por excepción.</td>
+</tr>
+<tr>
+<td><strong>Alicorp</strong></td>
+<td>Operación 100% tercerizada con alcance extendido desde asignación de placa hasta facturación en SAP. Usa Unigis, SAP y Excel dentro del entorno del cliente.</td>
+<td>Requiere revisar restricciones de acceso, dependencia de sistemas de cliente y posibles alternativas de integración o ingestión controlada de información.</td>
+</tr>
+<tr>
+<td><strong>Distribución local / T1 / T2 / última milla</strong></td>
+<td>Operaciones de entrega, abastecimiento y transporte secundario apoyadas en SimpliRoute y aplicativos de entrega.</td>
+<td>Debe evaluarse el rol de SimpliRoute como base operativa para alertas, estados de entrega, monitoreo y dashboards.</td>
+</tr>
+</tbody>
+</table></div>
+  </div>
+  <div class='grid2'>
+    <div class='card card-top-rosa'>
+      <div class='card-label mb8'>2.1. Dolores principales identificados</div>
+      <ul class="bullet-list deliver"><li>Alta dependencia del monitoreo manual: los monitores revisan unidades, reportes, páginas GPS, aplicativos y sistemas de cliente de forma manual.</li><li>Flota tercerizada como principal fuente de complejidad: existen múltiples proveedores GPS, distinta calidad de datos, telemetría parcial y limitaciones de integración.</li><li>Alertas y escalamiento no completamente formalizados: muchas reglas operativas viven en la práctica diaria y no en una matriz estructurada.</li><li>Reportería recurrente con alta carga operativa: existen reportes que requieren consolidación manual y actualización frecuente.</li><li>Procesos parcialmente documentados: hay conocimiento operativo valioso, pero disperso en personas, archivos y prácticas no estandarizadas.</li><li>Baja adopción actual de IA: la oportunidad no está en incorporar IA por sí sola, sino en priorizar casos con datos, proceso y valor operativo claro.</li></ul>
+    </div>
+    <div class='card card-top-celeste'>
+      <div class='card-label mb8'>2.2. Reto estratégico</div>
+      <p>El reto estratégico de Ransa no es únicamente automatizar reportes o conectar sistemas aislados. El reto es diseñar las bases de un producto transversal de Torre de Control Inteligente, capaz de operar sobre distintas fuentes, con reglas estándar, configuración por cliente, gestión por excepción y una visión escalable hacia nuevos clientes y países.</p>
+    </div>
+  </div>
+  <div class='card card-top-verde mt24'>
+    <div class='card-label mb8'>2.3. Reto comercial y de escalamiento</div>
+    <p>Ransa busca responder a la demanda de nuevos clientes de Torre de Control sin multiplicar procesos manuales ni desarrollar una solución completamente distinta para cada operación. La oportunidad consiste en convertir la Torre de Control Inteligente en un servicio estandarizado, configurable y escalable, con paquetes preliminares y reglas de configuración que deberán validarse antes de cualquier oferta comercial definitiva.</p>
+  </div>
+</section>
+
+<section class='section' id='tab-objetivo'>
+
+  <div class='eyebrow'>Sección 03</div>
+  <div class='section-title'>3. Objetivo</div>
+  <div class='divider'></div>
+
+  <div class='card card-top-celeste mb24'>
+    <div class='card-label mb8'>Objetivo</div>
+    <p>Ejecutar las Fases I–III de la hoja de ruta para transformar el entendimiento preliminar de la Torre de Control Inteligente de Ransa en una visión priorizada de producto, con bases operativas, comerciales y técnicas suficientes para decidir una eventual Propuesta Técnico-Económica de desarrollo.</p>
+  </div>
+  <div class='card card-top-azul'>
+    <div class='card-label mb8'>3.1. Objetivos específicos de las Fases I–III</div>
+    <ul class="bullet-list results"><li>Instalar el gobierno del proyecto y alinear a los actores clave de Ransa para ejecutar el diagnóstico con participación de negocio, operación y tecnología.</li><li>Comprender la operación actual de la Torre de Control, sus procesos, fuentes de información, restricciones y principales oportunidades de mejora.</li><li>Priorizar los casos de uso y capacidades candidatas que puedan aportar mayor valor operativo y comercial, incluyendo visibilidad ejecutiva, gestión por alertas, comunicaciones y escalabilidad multicliente.</li><li>Definir una visión de producto y un roadmap referencial que orienten la siguiente decisión de inversión, incluyendo una hipótesis preliminar de releases y criterios de configuración comercial.</li></ul>
+  </div>
+</section>
+
+<section class='section' id='tab-principios'>
+
+  <div class='eyebrow'>Sección 04</div>
+  <div class='section-title'>4. Principios de diseño para la Torre de Control Inteligente</div>
+  <div class='divider'></div>
+
+  <div class='card'>
+    <div class='table-scroll'><table class='tbl rosa-head'>
+<thead><tr>
+<th>Principio</th>
+<th>Aplicación en Ransa</th>
+</tr></thead>
+<tbody><tr>
+<td><strong>Producto único, no soluciones aisladas</strong></td>
+<td>Extractivos, CBC, Alicorp y T1/T2 deberán alimentar una misma visión de producto, con núcleo común, separación segura por cliente/tenant, parámetros configurables y límites explícitos entre estándar, configurable y custom.</td>
+</tr>
+<tr>
+<td><strong>Time-to-value mediante releases incrementales</strong></td>
+<td>La hoja de ruta debe permitir recomendar una primera versión utilizable y upgrades posteriores, evitando esperar al cierre de todo el ciclo para capturar valor operativo o comercial.</td>
+</tr>
+<tr>
+<td><strong>Producto multitenant y comercializable</strong></td>
+<td>El diseño debe considerar clientes, perfiles, permisos, reglas y módulos como elementos configurables de un servicio escalable de Torre de Control.</td>
+</tr>
+<tr>
+<td><strong>Estándar primero, configuración después</strong></td>
+<td>Las variaciones por cliente deben gestionarse mediante parámetros y paquetes antes de decidir desarrollos especiales.</td>
+</tr>
+<tr>
+<td><strong>Gestión por excepción</strong></td>
+<td>El monitor debe dejar de revisar unidad por unidad y pasar a atender alertas priorizadas, con reglas de criticidad y escalamiento.</td>
+</tr>
+<tr>
+<td><strong>Aprovechamiento de herramientas existentes</strong></td>
+<td>La hoja de ruta debe revisar el rol de SimpliRoute, Navisaf, MyGeoTab, Unigis, SAP, Excel y plataformas GPS antes de proponer nuevos desarrollos.</td>
+</tr>
+<tr>
+<td><strong>Datos antes que automatización</strong></td>
+<td>No se debe automatizar un proceso que no tenga fuente, regla, responsable y criterio de éxito definidos.</td>
+</tr>
+<tr>
+<td><strong>IA proporcional a la madurez operativa</strong></td>
+<td>La IA debe aplicarse primero a casos concretos: alertas, resúmenes, asistencia al monitor, clasificación de incidencias y comunicación controlada.</td>
+</tr>
+<tr>
+<td><strong>Visibilidad jerárquica por rol</strong></td>
+<td>Las vistas deben permitir pasar de portafolio total a cliente crítico, operación y unidad/placa, respetando permisos y necesidades de información por nivel.</td>
+</tr>
+<tr>
+<td><strong>Trazabilidad de la intervención humana</strong></td>
+<td>El producto futuro debe registrar asignaciones, respuestas, resoluciones, escalamientos, comunicaciones y acciones ejecutadas por monitores y supervisores.</td>
+</tr>
+<tr>
+<td><strong>Escalabilidad regional</strong></td>
+<td>El producto debe diseñarse con capacidad de replicarse a otros clientes y países, evitando dependencias excesivamente locales o manuales.</td>
+</tr>
+</tbody>
+</table></div>
+  </div>
+</section>
+
+<section class='section' id='tab-vision'>
+
+  <div class='eyebrow'>Sección 05</div>
+  <div class='section-title'>5. Visión objetivo del producto</div>
+  <div class='divider'></div>
+
+  <div class='card card-top-azul mb24'>
+    <p>La Torre de Control Inteligente de Ransa debe concebirse como una plataforma/capa operativa que consolida información de transporte, entregas, GPS, telemetría, reportes y sistemas de cliente, para generar alertas, dashboards, trazabilidad y asistencia al monitor en la toma de decisiones.</p>
+  </div>
+  <div class='card mb24'>
+    <div class='card-label mb16'>5.1. Capacidades objetivo</div>
+    <div class='table-scroll'><table class='tbl rosa-head'>
+<thead><tr>
+<th>Capa / capacidad</th>
+<th>Descripción preliminar</th>
+</tr></thead>
+<tbody><tr>
+<td><strong>Consolidación de fuentes</strong></td>
+<td>Ingesta de datos desde SimpliRoute, Navisaf, MyGeoTab, Unigis, SAP, archivos, aplicativos y GPS terceros, según disponibilidad y permisos.</td>
+</tr>
+<tr>
+<td><strong>Gestión multicliente y configuración</strong></td>
+<td>Separación lógica por cliente, perfiles y permisos, reglas configurables, catálogo de módulos y límites entre estándar, configuración y desarrollo especial.</td>
+</tr>
+<tr>
+<td><strong>Modelo operativo común</strong></td>
+<td>Definición de procesos, roles, alertas, criticidades, responsables y reglas de escalamiento comunes, con variaciones controladas por cliente.</td>
+</tr>
+<tr>
+<td><strong>Motor de alertas</strong></td>
+<td>Detección de eventos como retrasos, desvíos, paradas no autorizadas, pedido no entregado, incumplimiento de Plan de Ruta o tiempos fuera de rango.</td>
+</tr>
+<tr>
+<td><strong>Gestión por excepción</strong></td>
+<td>Priorización de casos para que el monitor atienda eventos críticos y no revise todas las unidades manualmente.</td>
+</tr>
+<tr>
+<td><strong>Cockpit ejecutivo y de portafolio</strong></td>
+<td>Vista consolidada de clientes activos, unidades en ruta, clientes o servicios críticos, incidentes activos, incumplimientos o alertas prioritarias, con navegación desde portafolio hasta cliente, operación y unidad.</td>
+</tr>
+<tr>
+<td><strong>Dashboard operativo con drill-down</strong></td>
+<td>Vistas de cumplimiento, OTIF, entregas, telemetría, alertas, tiempos por tramo e incidencias, permitiendo bajar desde la operación hasta la unidad/placa afectada.</td>
+</tr>
+<tr>
+<td><strong>Gestión y desempeño de monitores</strong></td>
+<td>Capacidad preliminar para medir alertas asignadas, reconocidas y resueltas, tiempo de primera respuesta, tiempo de resolución, escalamientos, intervenciones registradas, carga activa, cumplimiento de SLA y auditoría de acciones o comunicaciones. La medición no debe limitarse a cantidad de alertas, pues también debe trazarse la actividad cuando no existan incidencias críticas.</td>
+</tr>
+<tr>
+<td><strong>Repositorio de procesos y reglas</strong></td>
+<td>Base estructurada de procedimientos, matrices de alertas, criterios de atención, rutas de escalamiento y reglas de comunicación.</td>
+</tr>
+<tr>
+<td><strong>Asistencia inteligente</strong></td>
+<td>Capacidades de IA para resumir eventos, sugerir acciones, recuperar procedimientos, generar cierres de turno y apoyar la toma de decisiones.</td>
+</tr>
+<tr>
+<td><strong>Comunicaciones proactivas y multicanal</strong></td>
+<td>Creación, aprobación, segmentación y difusión de contingencias operativas o externas hacia clientes, transportistas y unidades afectadas, incluyendo severidad, zona, vigencia, tiempo estimado, recomendaciones o desvíos y actualización de cierre. Los canales correo, WhatsApp, PWA y push serán alternativas a evaluar.</td>
+</tr>
+</tbody>
+</table></div>
+  </div>
+  <div class='card card-top-celeste'>
+    <div class='card-label mb8'>5.2. Arquitectura lógica preliminar</div>
+    <p>La arquitectura lógica será validada durante la Fase III. Como punto de partida, se plantea una secuencia de capas:</p>
+    <div class='table-scroll'><table class='tbl celeste-head'>
+<thead><tr>
+<th>Fuentes</th>
+<th>Tenant / seguridad</th>
+<th>Ingesta / normalización</th>
+<th>Eventos y reglas</th>
+<th>Audiencias y notificaciones</th>
+<th>Experiencia operativa</th>
+</tr></thead>
+<tbody><tr>
+<td><strong>SimpliRoute, Navisaf, MyGeoTab, Unigis, SAP, Excel, GPS terceros, aplicativos de entrega</strong></td>
+<td>Separación por cliente/tenant, perfiles, permisos, jerarquías por rol y auditoría de acciones humanas</td>
+<td>APIs, archivos automatizados, conectores, extracción controlada o carga estructurada según disponibilidad</td>
+<td>Modelo unificado de eventos, matriz de alertas, criticidades, reglas de escalamiento y trazabilidad</td>
+<td>Segmentación de destinatarios, motor de notificaciones, canales a evaluar: correo, WhatsApp, PWA y push, y registro de entrega, lectura o confirmación cuando el canal lo permita</td>
+<td>Bandeja de alertas, cockpit ejecutivo, dashboards operativos, panel de monitores, asistencia inteligente y reportes automáticos</td>
+</tr>
+</tbody>
+</table></div>
+  </div>
+  <div class='grid2 mt24'>
+    <div class='card card-top-azul'>
+      <div class='card-label mb8'>Wireframe conceptual A · Vista ejecutiva</div>
+      <div class='wire-path'>
+        <div class='wire-node'><strong>Portafolio</strong><span>Vista consolidada por cartera de servicios.</span></div>
+        <div class='wire-node'><strong>Cliente crítico</strong><span>Priorización por alertas, incumplimientos o exposición.</span></div>
+        <div class='wire-node'><strong>Operación</strong><span>Detalle por frente, servicio, ruta o contrato.</span></div>
+        <div class='wire-node'><strong>Unidad / placa</strong><span>Evento, ubicación, responsable y trazabilidad.</span></div>
+      </div>
+    </div>
+    <div class='card card-top-morado'>
+      <div class='card-label mb8'>Wireframe conceptual B · Vista de supervisión</div>
+      <div class='wire-path'>
+        <div class='wire-node'><strong>Monitor</strong><span>Identidad, turno y carga activa.</span></div>
+        <div class='wire-node'><strong>Alertas</strong><span>Asignadas, reconocidas y resueltas.</span></div>
+        <div class='wire-node'><strong>Acciones</strong><span>Contactos, escalamientos y bitácora.</span></div>
+        <div class='wire-node'><strong>SLA</strong><span>Tiempos, cumplimiento y auditoría.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class='section' id='tab-ruta'>
+
+  <div class='eyebrow'>Sección 06</div>
+  <div class='section-title'>6. Hoja de ruta</div>
+  <div class='divider'></div>
+
+  <div class='card card-top-azul mb24'>
+    <p>La hoja de ruta sigue la estructura metodológica de FutureLab para proyectos tecnológicos y la adapta al contexto específico de Ransa. El proyecto se organiza en seis grandes etapas, aunque la presente propuesta solo cotiza las tres primeras.</p>
+  </div>
+  <div class='card mb24'>
+    <div class='table-scroll'><table class='tbl roadmap-table rosa-head'>
+<thead><tr>
+<th>Etapa</th>
+<th>Fases internas</th>
+<th>Propósito en Ransa</th>
+<th>Resultado esperado</th>
+<th>Duración</th>
+<th>Estado comercial</th>
+</tr></thead>
+<tbody><tr>
+<td><strong>I. Kick-off &amp; Gobierno del Proyecto</strong></td>
+<td>0. Inicio formal</td>
+<td>Instalar gobierno, NDA, canales, responsables, cronograma y acceso a información.</td>
+<td>Proyecto alineado, responsables definidos y condiciones listas para iniciar el diagnóstico.</td>
+<td>1 sem.</td>
+<td>Cotizado</td>
+</tr>
+<tr>
+<td><strong>II. Diagnóstico &amp; Mapeo de Procesos</strong></td>
+<td>1. Inmersión<br>2. Priorización de oportunidades<br>3. Visión preliminar</td>
+<td>Comprender la operación actual, sus principales brechas, fuentes de información y oportunidades.</td>
+<td>Entendimiento consolidado de la operación actual, principales brechas y oportunidades candidatas.</td>
+<td>4 sem.</td>
+<td>Cotizado</td>
+</tr>
+<tr>
+<td><strong>III. Dimensionamiento de Negocio y Técnico</strong></td>
+<td>4. Visión funcional y criterios de alcance<br>5. Lineamientos técnicos y roadmap</td>
+<td>Convertir la visión preliminar en lineamientos funcionales, consideraciones técnicas y roadmap de continuidad.</td>
+<td>Visión de producto, lineamientos funcionales, lineamientos técnicos y roadmap referencial para una PTE posterior.</td>
+<td>2 sem.</td>
+<td>Cotizado</td>
+</tr>
+<tr>
+<td><strong>IV. Propuesta Técnico-Económica</strong></td>
+<td>6. PTE del proyecto tecnológico</td>
+<td>Construir la propuesta final de desarrollo con alcance, cronograma, equipo e inversión.</td>
+<td>Propuesta de desarrollo dimensionada sobre el alcance priorizado.</td>
+<td>1 sem. ref.</td>
+<td>No cotizado</td>
+</tr>
+<tr>
+<td><strong>V. Desarrollo por releases incrementales</strong></td>
+<td>7. Release inicial + upgrades</td>
+<td>Construir la plataforma mediante sprints priorizados que produzcan releases utilizables, testeados y potencialmente comercializables antes de completar todo el alcance.</td>
+<td>Releases utilizables y validados progresivamente, según alcance aprobado.</td>
+<td>Por definir en Fase IV</td>
+<td>No cotizado</td>
+</tr>
+<tr>
+<td><strong>VI. Transferencia técnica y funcional</strong></td>
+<td>8. Transferencia</td>
+<td>Despliegue, documentación, transferencia y soporte inicial.</td>
+<td>Transferencia funcional y técnica del producto construido, según alcance contratado.</td>
+<td>2 sem. ref.</td>
+<td>No cotizado</td>
+</tr>
+</tbody>
+</table></div>
+  </div>
+  <div class='box-note'>
+    <div class='box-label bl-amarillo'>Duración estimada</div>
+    <p>Duración estimada del alcance cotizado: 7 semanas. Duración referencial del ciclo completo, incluyendo desarrollo y transferencia: 18 a 20 semanas, sujeta al alcance que se defina en la Propuesta Técnico-Económica posterior. La duración total referencial no representa necesariamente el tiempo hasta la primera versión utilizable.</p>
+  </div>
+</section>
+
+<section class='section' id='tab-producto'>
+
+  <div class='eyebrow'>Sección 07</div>
+  <div class='section-title'>7. Modelo comercial y releases incrementales</div>
+  <div class='divider'></div>
+
+  <div class='card card-top-azul mb24'>
+    <div class='card-label mb8'>Hipótesis preliminar a validar durante las Fases II y III</div>
+    <p>Esta sección no forma parte de un catálogo comercial definitivo ni de un compromiso de desarrollo dentro de las siete semanas cotizadas. Su propósito es ordenar una hipótesis de producto para que Ransa pueda validar, durante el diagnóstico y dimensionamiento, qué primera versión tendría sentido construir y cómo podría empaquetarse el servicio para nuevos clientes.</p>
+  </div>
+
+  <div class='card mb24'>
+    <div class='card-label mb16'>A. Releases incrementales</div>
+    <div class='grid3'>
+      <div class='card card-top-celeste release-step'>
+        <div class='release-num'>1</div>
+        <div class='phase-title'>Release 1 — Base utilizable</div>
+        <p>Primera versión priorizada sobre un núcleo común, orientada a validar operación, visibilidad básica, reglas críticas y flujo de atención.</p>
+        <span class='badge'>Por dimensionar</span>
+      </div>
+      <div class='card card-top-verde release-step'>
+        <div class='release-num'>2</div>
+        <div class='phase-title'>Release 2 — Upgrade operativo</div>
+        <p>Ampliación funcional sobre la base validada, incorporando más automatización, trazabilidad, tableros y reglas operativas configurables.</p>
+        <span class='badge'>Por dimensionar</span>
+      </div>
+      <div class='card card-top-morado release-step'>
+        <div class='release-num'>3</div>
+        <div class='phase-title'>Release 3 — Control avanzado</div>
+        <p>Capacidades avanzadas de gestión, analítica, comunicaciones, auditoría y configuración multicliente, según valor y factibilidad confirmados.</p>
+        <span class='badge'>Por dimensionar</span>
+      </div>
+    </div>
+    <div class='box-note mt24'>
+      <div class='box-label bl-amarillo'>Advertencia de alcance</div>
+      <p>La composición, secuencia, duración e inversión de cada release se definirán después de validar procesos, datos, integraciones y prioridades. Estos releases no están incluidos en la cotización actual de Fases I–III.</p>
+    </div>
+  </div>
+
+  <div class='card mb24'>
+    <div class='card-label mb16'>B. Hipótesis de servicios A/B/C</div>
+    <div class='table-scroll'><table class='tbl rosa-head'>
+<thead><tr>
+<th>Modelo</th>
+<th>Perfil de necesidad</th>
+<th>Capacidades potenciales</th>
+<th>Nivel de trazabilidad</th>
+<th>Requisitos de datos e integración</th>
+<th>Estado</th>
+</tr></thead>
+<tbody><tr>
+<td><strong>Modelo A — Esencial</strong></td>
+<td>Clientes u operaciones que requieren visibilidad inicial y reglas básicas de control.</td>
+<td>Consolidación de fuentes disponibles, tablero ejecutivo básico, alertas críticas y reportes priorizados.</td>
+<td>Operativa y ejecutiva básica, según datos disponibles.</td>
+<td>Fuentes mínimas validadas, responsables definidos y reglas de atención documentadas.</td>
+<td><span class='badge'>Por validar</span></td>
+</tr>
+<tr>
+<td><strong>Modelo B — Gestión</strong></td>
+<td>Operaciones con mayor criticidad, necesidad de control por excepción y trazabilidad de atención.</td>
+<td>Dashboard operativo con drill-down, gestión de alertas, bitácora de acciones, SLA y segmentación inicial.</td>
+<td>Cliente, operación, unidad y monitor.</td>
+<td>Integraciones o cargas recurrentes, identidad de usuarios, matriz de alertas y flujo de escalamiento.</td>
+<td><span class='badge'>Por validar</span></td>
+</tr>
+<tr>
+<td><strong>Modelo C — Control avanzado</strong></td>
+<td>Clientes o servicios críticos que requieren mayor automatización, gobierno y comunicación proactiva.</td>
+<td>Cockpit ejecutivo, multitenancy, comunicaciones de contingencia, auditoría ampliada y reglas configurables.</td>
+<td>Portafolio, cliente, operación, unidad, monitor, comunicación y auditoría.</td>
+<td>Mayor madurez de datos, permisos, canales autorizados, costos de terceros y restricciones evaluadas.</td>
+<td><span class='badge'>Por validar</span></td>
+</tr>
+</tbody>
+</table></div>
+  </div>
+
+  <div class='card card-top-celeste'>
+    <div class='card-label mb8'>Relación entre releases y modelos comerciales</div>
+    <ul class="bullet-list check"><li>Un release representa una etapa temporal de construcción y validación del producto.</li><li>Un modelo comercial representa una configuración del servicio que Ransa podría ofrecer a un cliente.</li><li>No deben tratarse automáticamente como equivalentes hasta completar las Fases II y III, validar restricciones y dimensionar la Propuesta Técnico-Económica posterior.</li></ul>
+  </div>
+</section>
+
+<section class='section' id='tab-fases123'>
+
+  <div class='eyebrow'>Sección 08</div>
+  <div class='section-title'>8. Desarrollo de Fases I, II y III</div>
+  <div class='divider'></div>
+
+  <div class='frente-tabs mb24' id='phaseTabs'>
+    <div class='ftab active' data-phase='fase1'>Fase I</div>
+    <div class='ftab' data-phase='fase2'>Fase II</div>
+    <div class='ftab' data-phase='fase3'>Fase III</div>
+  </div>
+  <div class='phase-panel active' id='phase-fase1'>
+    <div class='card card-top-rosa mb24'>
+      <div class='card-label mb8'>Fase I. Kick-off &amp; Gobierno del Proyecto</div>
+      <p><strong>Propósito:</strong> establecer las condiciones formales, operativas y de gobierno necesarias para ejecutar el diagnóstico y dimensionamiento de manera ordenada, con participación de sponsor ejecutivo, Product Owner, Comercial, Operaciones, Torre de Control y Tecnología/TI.</p>
+    </div>
+    <div class='card'><div class='table-scroll'><table class='tbl rosa-head'>
+<thead><tr>
+<th>Foco de trabajo</th>
+<th>Resultado esperado</th>
+<th>Responsables</th>
+<th>Duración</th>
+</tr></thead>
+<tbody><tr>
+<td><strong><ul class='cell-list'><li>Formalización del inicio y condiciones de trabajo.</li><li>Definición del gobierno, roles y responsables.</li><li>Alineamiento del plan de trabajo, calendario y dinámica de validación.</li><li>Identificación inicial de información requerida y dependencias.</li></ul></strong></td>
+<td>Proyecto alineado, responsables definidos y condiciones listas para iniciar el diagnóstico.</td>
+<td>FutureLab + sponsor ejecutivo + Product Owner + Comercial + Operaciones + Torre de Control + TI</td>
+<td>1 semana</td>
+</tr>
+</tbody>
+</table></div></div>
+    <div class='box-note'>
+      <div class='box-label bl-azul'>Gobierno sugerido</div>
+      <p>El diseño formal priorizará roles sobre nombres. Mauricio se considera referente comercial y Iván Sánchez como instancia de aprobación ejecutiva, sujeto a confirmación por Ransa.</p>
+    </div>
+  </div>
+  <div class='phase-panel' id='phase-fase2'>
+    <div class='card card-top-celeste mb24'>
+      <div class='card-label mb8'>Fase II. Diagnóstico &amp; Mapeo de Procesos</div>
+      <p><strong>Propósito:</strong> profundizar el entendimiento de la operación actual, identificar brechas y priorizar oportunidades relevantes antes de definir una visión inicial de producto. Esta fase evita avanzar directamente a construcción sin confirmar primero procesos, datos, restricciones y dependencias.</p>
+    </div>
+    <div class='grid1'>
+      <div class='card mb24'><div class='phase-title'>1. Inmersión</div><div class='table-scroll'><table class='tbl rosa-head'>
+<thead><tr>
+<th>Foco de trabajo</th>
+<th>Resultado esperado</th>
+<th>Duración</th>
+</tr></thead>
+<tbody><tr>
+<td><strong><ul class='cell-list'><li>Sesiones de levantamiento con áreas clave de Ransa.</li><li>Revisión de procesos, herramientas, reportes y fuentes disponibles.</li><li>Identificación de dolores, restricciones y oportunidades operativas.</li><li>Levantamiento preliminar de necesidades de visibilidad, alertas y comunicación.</li></ul></strong></td>
+<td>Entendimiento consolidado de la operación actual y principales brechas a validar con Ransa.</td>
+<td>2 semanas</td>
+</tr>
+</tbody>
+</table></div></div>
+      <div class='card mb24'><div class='phase-title'>2. Priorización de oportunidades</div><div class='table-scroll'><table class='tbl rosa-head'>
+<thead><tr>
+<th>Foco de trabajo</th>
+<th>Resultado esperado</th>
+<th>Duración</th>
+</tr></thead>
+<tbody><tr>
+<td><strong><ul class='cell-list'><li>Clasificación de oportunidades de automatización, IA, visibilidad y comunicación.</li><li>Evaluación preliminar de valor, factibilidad, dependencia y riesgo.</li><li>Priorización de casos candidatos para dimensionamiento.</li></ul></strong></td>
+<td>Oportunidades priorizadas y criterios de decisión compartidos para orientar la visión preliminar.</td>
+<td>1 semana</td>
+</tr>
+</tbody>
+</table></div></div>
+      <div class='card'><div class='phase-title'>3. Visión de Producto Preliminar</div><div class='table-scroll'><table class='tbl rosa-head'>
+<thead><tr>
+<th>Foco de trabajo</th>
+<th>Resultado esperado</th>
+<th>Duración</th>
+</tr></thead>
+<tbody><tr>
+<td><strong><ul class='cell-list'><li>Consolidación de hallazgos del diagnóstico.</li><li>Definición preliminar de capacidades comunes de la Torre de Control.</li><li>Identificación de criterios de configuración y escalabilidad.</li><li>Planteamiento inicial de posibles releases y modelos de servicio.</li><li>Validación de la visión preliminar para pasar a dimensionamiento.</li></ul></strong></td>
+<td>Visión preliminar validada y criterios iniciales para orientar el dimensionamiento funcional y técnico.</td>
+<td>1 semana</td>
+</tr>
+</tbody>
+</table></div></div>
+    </div>
+  </div>
+  <div class='phase-panel' id='phase-fase3'>
+    <div class='card card-top-azul mb24'>
+      <div class='card-label mb8'>Fase III. Dimensionamiento de Negocio y Técnico</div>
+      <p><strong>Propósito:</strong> convertir la visión preliminar en una definición funcional y técnica suficientemente clara para que Ransa pueda decidir el alcance del desarrollo y solicitar una Propuesta Técnico-Económica posterior sobre bases concretas.</p>
+    </div>
+    <div class='card mb24'><div class='phase-title'>4. Visión funcional y criterios de alcance</div><div class='table-scroll'><table class='tbl rosa-head'>
+<thead><tr>
+<th>Foco de trabajo</th>
+<th>Resultado esperado</th>
+<th>Duración</th>
+</tr></thead>
+<tbody><tr>
+<td><strong><ul class='cell-list'><li>Definición de la visión objetivo del producto.</li><li>Identificación de perfiles de usuario y necesidades principales.</li><li>Priorización de capacidades y casos de uso.</li><li>Definición de lineamientos funcionales de alto nivel.</li></ul></strong></td>
+<td>Alcance funcional preliminar para orientar la Propuesta Técnico-Económica posterior.</td>
+<td>1 semana</td>
+</tr>
+</tbody>
+</table></div></div>
+    <div class='card'><div class='phase-title'>5. Lineamientos técnicos y roadmap de continuidad</div><div class='table-scroll'><table class='tbl rosa-head'>
+<thead><tr>
+<th>Foco de trabajo</th>
+<th>Resultado esperado</th>
+<th>Duración</th>
+</tr></thead>
+<tbody><tr>
+<td><strong><ul class='cell-list'><li>Revisión de integraciones, datos y restricciones técnicas relevantes.</li><li>Identificación de consideraciones de seguridad, permisos, auditoría y canales.</li><li>Definición de riesgos, dependencias y supuestos técnicos.</li><li>Planteamiento de roadmap referencial y siguiente paso.</li></ul></strong></td>
+<td>Base técnica y roadmap referencial para dimensionar el desarrollo posterior.</td>
+<td>1 semana</td>
+</tr>
+</tbody>
+</table></div></div>
+  </div>
+</section>
+
+<section class='section' id='tab-fases456'>
+
+  <div class='eyebrow'>Sección 09</div>
+  <div class='section-title'>9. Fases IV, V y VI</div>
+  <div class='divider'></div>
+
+  <div class='card card-top-azul mb24'>
+    <p>Las fases siguientes forman parte de la ruta completa de proyecto tecnológico, pero no están incluidas en la cotización inicial. Su alcance, duración e inversión se definirán luego de cerrar la Fase III.</p>
+  </div>
+  <div class='card'><div class='table-scroll'><table class='tbl rosa-head'>
+<thead><tr>
+<th>Etapa posterior</th>
+<th>Objetivo</th>
+<th>Condición para avanzar</th>
+</tr></thead>
+<tbody><tr>
+<td><strong>IV. Propuesta Técnico-Económica</strong></td>
+<td>Diseñar la propuesta final de desarrollo, incorporando alcance del primer release, releases posteriores, mapa de dependencias, estrategia de despliegue progresivo, relación con modelos comerciales A/B/C, cronograma, equipo e inversión.</td>
+<td>Aprobación de la visión de producto, lineamientos funcionales y lineamientos técnicos de Fase III.</td>
+</tr>
+<tr>
+<td><strong>V. Release inicial + upgrades</strong></td>
+<td>Construir la plataforma mediante un release inicial y upgrades funcionales, con testing, aceptación y salida utilizable en cada etapa, sin asumir una fecha fija antes de dimensionar la PTE.</td>
+<td>Aceptación formal de la PTE y definición de ambiente, accesos, integraciones y equipo.</td>
+</tr>
+<tr>
+<td><strong>VI. Transferencia técnica y funcional</strong></td>
+<td>Puesta en producción, documentación, transferencia, manuales, soporte inicial y cierre del proyecto.</td>
+<td>Finalización del desarrollo, pruebas y aprobación de criterios de aceptación.</td>
+</tr>
+</tbody>
+</table></div></div>
+</section>
+
+<section class='section' id='tab-casos'>
+
+  <div class='eyebrow'>Sección 10</div>
+  <div class='section-title'>10. Casos de uso (en evaluación)</div>
+  <div class='divider'></div>
+
+  <div class='card card-top-celeste mb24'>
+    <p>Los siguientes casos de uso se consideran candidatos iniciales. Durante las Fases II y III se validará su valor, factibilidad, información requerida y dependencia técnica antes de recomendar un piloto.</p>
+  </div>
+  <div class='card'><div class='table-scroll'><table class='tbl rosa-head'>
+<thead><tr>
+<th>Caso de uso candidato</th>
+<th>Valor esperado</th>
+<th>Dependencias a validar</th>
+</tr></thead>
+<tbody><tr>
+<td><strong>Automatización del reporte de flota propia de Extractivos</strong></td>
+<td>Ahorro operativo directo, reducción de tiempos de actualización y mayor confiabilidad del control diario.</td>
+<td>Disponibilidad de datos de Navisaf/MyGeoTab, formato actual, reglas de actualización, responsables y validadores.</td>
+</tr>
+<tr>
+<td><strong>Motor de alertas operativas</strong></td>
+<td>Migración hacia gestión por excepción y reducción del monitoreo manual unidad por unidad.</td>
+<td>Matriz de alertas, fuentes detonantes, criticidad, tiempos de atención, responsables y rutas de escalamiento.</td>
+</tr>
+<tr>
+<td><strong>Control automático del Plan de Ruta</strong></td>
+<td>Mayor control en operaciones extractivas, seguridad, cumplimiento y sobreestadías.</td>
+<td>Planificación disponible, datos GPS confiables, reglas de tolerancia y trazabilidad por tramo.</td>
+</tr>
+<tr>
+<td><strong>Integración u homologación de GPS terceros</strong></td>
+<td>Ataca el mayor dolor de flota tercerizada y permite una vista única de control.</td>
+<td>Accesibilidad técnica, permisos de proveedores, calidad de datos, frecuencia, costos y estrategia de homologación.</td>
+</tr>
+<tr>
+<td><strong>Dashboard ejecutivo y operativo</strong></td>
+<td>Visibilidad jerárquica desde portafolio total hacia cliente, operación y unidad/placa, con cumplimiento, OTIF, alertas, tiempos, entregas, incidencias y desempeño.</td>
+<td>Definición de KPIs, fuentes de datos, frecuencia, permisos por rol y reglas de drill-down.</td>
+</tr>
+<tr>
+<td><strong>Gestión y desempeño de monitores</strong></td>
+<td>Medición objetiva de tiempos, carga, intervenciones, escalamientos, cumplimiento de SLA y trazabilidad de la atención.</td>
+<td>Identidad de usuarios, asignación de alertas, bitácora de acciones, registros de llamadas o contactos y definición de estándares operativos.</td>
+</tr>
+<tr>
+<td><strong>Comunicación masiva de contingencias</strong></td>
+<td>Difusión rápida y segmentada de bloqueos, huelgas, disturbios, cierres o desvíos hacia clientes y transportistas afectados.</td>
+<td>Gobierno de publicación, audiencias, ubicación, datos de contacto, canales autorizados, costos, consentimiento y reglas de vigencia.</td>
+</tr>
+<tr>
+<td><strong>Repositorio de procesos y reglas</strong></td>
+<td>Reduce dependencia de personas, acelera entrenamiento y habilita automatización consistente.</td>
+<td>Disponibilidad de procesos actuales, validación de responsables y formalización de reglas.</td>
+</tr>
+<tr>
+<td><strong>Asistencia inteligente al monitor</strong></td>
+<td>Soporte para resumir incidencias, consultar procedimientos, priorizar alertas y generar cierres de turno.</td>
+<td>Repositorio de conocimiento, datos confiables, reglas de negocio y límites de decisión.</td>
+</tr>
+<tr>
+<td><strong>Automatización conversacional</strong></td>
+<td>Validación puntual de eventos con conductores o transportistas mediante canales autorizados, separada de la comunicación masiva de contingencias.</td>
+<td>Canales autorizados, protocolos, datos de contacto, consentimiento, costos, restricciones y diseño de conversación.</td>
+</tr>
+</tbody>
+</table></div></div>
+</section>
+
+<section class='section' id='tab-entregables'>
+
+  <div class='eyebrow'>Sección 11</div>
+  <div class='section-title'>11. Informes por fase</div>
+  <div class='divider'></div>
+
+  <div class='card card-top-azul mb24'>
+    <p>Para mantener el alcance proporcional a una hoja de ruta de siete semanas, FutureLab consolidará los resultados en tres informes ejecutivos, uno por fase. Cada informe integrará las secciones clave necesarias para que Ransa revise avances, valide decisiones y prepare una eventual Propuesta Técnico-Económica posterior, sin convertir insumos de análisis en entregables independientes.</p>
+  </div>
+
+  <div class='card'><div class='table-scroll'><table class='tbl rosa-head'>
+<thead><tr>
+<th>Documento por fase</th>
+<th>Secciones clave incluidas</th>
+<th>Propósito de validación</th>
+</tr></thead>
+<tbody><tr>
+<td><strong>Informe Fase I — Kick-off &amp; Gobierno</strong></td>
+<td><ul class='cell-list'><li>Alcance validado del diagnóstico.</li><li>Gobierno del proyecto y roles de participación.</li><li>Plan de trabajo, calendario y dinámica de validación.</li><li>Información requerida, accesos y dependencias.</li><li>Riesgos iniciales y supuestos de trabajo.</li></ul></td>
+<td>Dejar instalado el marco de ejecución y confirmar quién participa, quién valida información y quién toma decisiones durante las siguientes fases.</td>
+</tr>
+<tr>
+<td><strong>Informe Fase II — Diagnóstico &amp; Mapeo</strong></td>
+<td><ul class='cell-list'><li>Resumen de procesos y frentes operativos revisados.</li><li>Principales dolores, brechas y dependencias operativas.</li><li>Fuentes de información, sistemas y restricciones identificadas.</li><li>Oportunidades candidatas de automatización, visibilidad, alertas y comunicación.</li><li>Criterios preliminares de priorización.</li></ul></td>
+<td>Validar el entendimiento operativo y comercial de la Torre de Control, separando hechos observados, hipótesis y oportunidades candidatas.</td>
+</tr>
+<tr>
+<td><strong>Informe Fase III — Dimensionamiento de Negocio y Técnico</strong></td>
+<td><ul class='cell-list'><li>Visión objetivo de la Torre de Control Inteligente.</li><li>Capacidades priorizadas y casos de uso recomendados.</li><li>Lineamientos funcionales de alto nivel.</li><li>Consideraciones técnicas y de integración.</li><li>Hipótesis comercial preliminar y criterios de configuración.</li><li>Roadmap referencial de releases y recomendación de siguiente paso.</li></ul></td>
+<td>Dejar una base funcional, técnica y comercial suficiente para decidir si corresponde avanzar a una Propuesta Técnico-Económica posterior.</td>
+</tr>
+</tbody>
+</table></div></div>
+</section>
+
+<section class='section' id='tab-cronograma'>
+
+  <div class='eyebrow'>Sección 12</div>
+  <div class='section-title'>12. Cronograma estimado</div>
+  <div class='divider'></div>
+
+  <div class='card card-top-azul mb24'><p>El cronograma del alcance cotizado es de 7 semanas, sujeto a la disponibilidad de participantes, documentación, accesos y validadores por parte de Ransa.</p></div>
+  <div class='timeline mb24'>
+    <div class='tl-item'><div class='tl-dot'>1</div><div class='tl-card'><div class='tl-phase'>Semana 1</div><div class='tl-title'>I. Kick-off & Gobierno</div><div class='tl-desc'>NDA, comité, PO, canales, cronograma, información requerida.</div><div class='tl-result'>Acta de inicio y cronograma validado.</div></div></div>
+    <div class='tl-item'><div class='tl-dot'>2-3</div><div class='tl-card'><div class='tl-phase'>Semanas 2-3</div><div class='tl-title'>II.1 Inmersión</div><div class='tl-desc'>Sesiones con áreas clave y revisión de procesos, herramientas, reportes y fuentes disponibles.</div><div class='tl-result'>Entendimiento operativo consolidado.</div></div></div>
+    <div class='tl-item'><div class='tl-dot'>4</div><div class='tl-card'><div class='tl-phase'>Semana 4</div><div class='tl-title'>II.2 Priorización de oportunidades</div><div class='tl-desc'>Oportunidades de automatización, IA, visibilidad y comunicación evaluadas por valor, factibilidad y dependencia.</div><div class='tl-result'>Oportunidades priorizadas.</div></div></div>
+    <div class='tl-item'><div class='tl-dot'>5</div><div class='tl-card'><div class='tl-phase'>Semana 5</div><div class='tl-title'>II.3 Visión preliminar</div><div class='tl-desc'>Capacidades comunes, criterios de configuración y planteamiento inicial de releases y modelos de servicio.</div><div class='tl-result'>Visión preliminar validada.</div></div></div>
+    <div class='tl-item'><div class='tl-dot'>6</div><div class='tl-card'><div class='tl-phase'>Semana 6</div><div class='tl-title'>III.4 Visión funcional</div><div class='tl-desc'>Perfiles, necesidades, capacidades priorizadas y lineamientos funcionales de alto nivel.</div><div class='tl-result'>Alcance funcional preliminar.</div></div></div>
+    <div class='tl-item'><div class='tl-dot'>7</div><div class='tl-card'><div class='tl-phase'>Semana 7</div><div class='tl-title'>III.5 Lineamientos técnicos</div><div class='tl-desc'>Datos, integraciones, restricciones, riesgos, dependencias y roadmap referencial.</div><div class='tl-result'>Base técnica y cierre ejecutivo.</div></div></div>
+  </div>
+  <div class='card'><div class='table-scroll'><table class='tbl rosa-head'>
+<thead><tr>
+<th>Semana</th>
+<th>Fase</th>
+<th>Foco de trabajo</th>
+<th>Hito de salida</th>
+</tr></thead>
+<tbody><tr>
+<td><strong>1</strong></td>
+<td>I. Kick-off &amp; Gobierno</td>
+<td>NDA, comité, PO, canales, cronograma, información requerida.</td>
+<td>Acta de inicio y cronograma validado.</td>
+</tr>
+<tr>
+<td><strong>2-3</strong></td>
+<td>II.1 Inmersión</td>
+<td>Sesiones con áreas clave y revisión de procesos, herramientas, reportes y fuentes disponibles.</td>
+<td>Entendimiento operativo consolidado.</td>
+</tr>
+<tr>
+<td><strong>4</strong></td>
+<td>II.2 Priorización de oportunidades</td>
+<td>Oportunidades de automatización, IA, visibilidad y comunicación evaluadas por valor, factibilidad y dependencia.</td>
+<td>Oportunidades priorizadas.</td>
+</tr>
+<tr>
+<td><strong>5</strong></td>
+<td>II.3 Visión preliminar</td>
+<td>Capacidades comunes, criterios de configuración y planteamiento inicial de releases y modelos de servicio.</td>
+<td>Visión preliminar validada.</td>
+</tr>
+<tr>
+<td><strong>6</strong></td>
+<td>III.4 Visión funcional</td>
+<td>Perfiles, necesidades, capacidades priorizadas y lineamientos funcionales de alto nivel.</td>
+<td>Alcance funcional preliminar.</td>
+</tr>
+<tr>
+<td><strong>7</strong></td>
+<td>III.5 Lineamientos técnicos</td>
+<td>Datos, integraciones, restricciones, riesgos, dependencias y roadmap referencial.</td>
+<td>Base técnica y cierre ejecutivo.</td>
+</tr>
+</tbody>
+</table></div></div>
+  <div class='continuity-band mt24'>
+    <div class='card-label mb16'>Continuidad referencial no cotizada</div>
+    <div class='grid3'>
+      <div class='card card-top-celeste'>
+        <div class='phase-title'>Release 1: primera versión utilizable</div>
+        <p>Alcance y duración por definir en Fase IV, luego de validar procesos, datos, integraciones y prioridades.</p>
+      </div>
+      <div class='card card-top-verde'>
+        <div class='phase-title'>Release 2: upgrade operativo</div>
+        <p>Capacidades adicionales sobre el núcleo común, sujetas a dependencias técnicas, validación de usuarios e inversión aprobada.</p>
+      </div>
+      <div class='card card-top-morado'>
+        <div class='phase-title'>Release 3: control avanzado</div>
+        <p>Escalamiento funcional, multicliente y de comunicaciones, sin fechas cerradas ni compromiso dentro del alcance actual.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class='section' id='tab-inversion'>
+
+  <div class='eyebrow'>Sección 13</div>
+  <div class='section-title'>13. Inversión</div>
+  <div class='divider'></div>
+
+  <div class='price-card mb24'>
+    <div class='price-ribbon'>Fases I – III</div>
+    <div class='card-label mb8'>13.1. Precio</div>
+    <div class='price-amount'><span class='price-currency'>USD</span>12,000</div>
+    <div class='price-period'>+ IGV</div>
+    <div class='price-feat'><div class='price-feat-check'>✓</div><div class='price-feat-text'>Kick-off & Gobierno + Dx & Mapeo de Procesos + Dimensionamiento de Negocio y Técnico</div></div>
+    <div class='price-feat' style='border-bottom:none'><div class='price-feat-check'>✓</div><div class='price-feat-text'>50% al inicio del proyecto y 50% al cierre del proyecto</div></div>
+  </div>
+  <div class='grid2'>
+    <div class='card'><div class='card-label mb16'>13.1. Precio</div><div class='table-scroll'><table class='tbl rosa-head'>
+<thead><tr>
+<th>Concepto</th>
+<th>Monto</th>
+</tr></thead>
+<tbody><tr>
+<td><strong>Fases I – III (Kick-off &amp; Gobierno + Dx &amp; Mapeo de Procesos + Dimensionamiento de Negocio y Técnico)</strong></td>
+<td>USD 12,000 + IGV</td>
+</tr>
+</tbody>
+</table></div></div>
+    <div class='card'><div class='card-label mb16'>13.2. Forma de pago</div><div class='table-scroll'><table class='tbl rosa-head'>
+<thead><tr>
+<th>Componente</th>
+<th>Forma de pago sugerida</th>
+</tr></thead>
+<tbody><tr>
+<td><strong>Fases I - III</strong></td>
+<td>50% al inicio del proyecto y 50% al cierre del proyecto</td>
+</tr>
+</tbody>
+</table></div></div>
+  </div>
+  <div class='box-note mt24'>
+    <div class='box-label bl-amarillo'>Nota de alcance económico</div>
+    <p>La inversión corresponde a las Fases I–III de diagnóstico y dimensionamiento. El desarrollo de releases, módulos, integraciones productivas y canales será cotizado posteriormente.</p>
+  </div>
+</section>
+
+<section class='section' id='tab-compromisos'>
+
+  <div class='eyebrow'>Sección 14</div>
+  <div class='section-title'>14. Compromisos requeridos de Ransa</div>
+  <div class='divider'></div>
+
+  <div class='card card-top-azul mb24'><p>Para cumplir el cronograma y alcanzar el nivel de profundidad esperado, Ransa deberá facilitar información, disponibilidad de usuarios clave y validación oportuna de hallazgos.</p></div>
+  <div class='card card-top-celeste'><ul class="bullet-list results"><li>Designar un Product Owner o responsable principal del proyecto.</li><li>Confirmar participantes de Comercial, Torre de Control, Operaciones, Tecnología/TI y responsables por frente operativo.</li><li>Asegurar disponibilidad del sponsor ejecutivo para decisiones, validaciones y aprobación de lineamientos clave.</li><li>Facilitar documentación, formatos, reportes, pantallazos, flujos, KPI y muestras controladas o anonimizadas de información.</li><li>Entregar o validar datos de actividad de monitores, asignación de alertas, registros de llamadas, contactos, escalamientos o acciones, cuando existan.</li><li>Brindar acceso de visualización o demostración a herramientas relevantes, según permisos y NDA.</li><li>Coordinar la revisión de capacidades disponibles en SimpliRoute, Navisaf, MyGeoTab, Unigis, SAP, Excel, TMS y plataformas GPS terceros.</li><li>Definir responsables para publicar contingencias, audiencias objetivo y canales autorizados para evaluación.</li><li>Validar la hipótesis de paquetes comerciales A/B/C y los límites entre estándar, configurable y desarrollo especial.</li><li>Validar oportunamente la estrategia de releases y la recomendación de primera versión utilizable.</li><li>Revisar y validar informes, hallazgos, lineamientos y decisiones de priorización dentro de los plazos acordados.</li><li>Informar restricciones técnicas, contractuales, de seguridad o de terceros que puedan afectar el diseño de la solución.</li><li>Participar en las sesiones de cierre y aprobar la base para la eventual Propuesta Técnico-Económica posterior.</li></ul></div>
+</section>
+
+<section class='section' id='tab-exclusiones'>
+
+  <div class='eyebrow'>Sección 15</div>
+  <div class='section-title'>15. Exclusiones</div>
+  <div class='divider'></div>
+
+  <div class='card card-top-rosa mb24'><p>Para mantener claridad de alcance, las Fases I, II y III no incluyen ejecución de desarrollo ni implementación tecnológica. Cualquier componente de construcción será evaluado posteriormente en la Fase IV de Propuesta Técnico-Económica.</p></div>
+  <div class='card'><ul class="bullet-list deliver"><li>Desarrollo de software, prototipos funcionales o MVP.</li><li>No se garantiza un release productivo dentro de las siete semanas cotizadas.</li><li>Los modelos A/B/C son una hipótesis de trabajo y no constituyen un catálogo comercial definitivo.</li><li>No se incluyen precios comerciales para los modelos A/B/C.</li><li>No se incluye desarrollo del cockpit ejecutivo, panel de monitores o módulo de comunicaciones.</li><li>No se incluye configuración multitenant productiva.</li><li>Configuración real de sistemas, APIs, conectores o integraciones productivas.</li><li>Automatización real de reportes o construcción de dashboards productivos.</li><li>Modificaciones en SimpliRoute, Navisaf, MyGeoTab, Unigis, SAP, TMS o sistemas de clientes.</li><li>Homologación contractual de proveedores GPS o negociación con terceros.</li><li>No se incluyen integraciones con telefonía ni captura automática de llamadas.</li><li>No se incluyen costos de WhatsApp, SMS, PWA, push, infraestructura, consumo cloud, licencias o proveedores de terceros.</li><li>Pruebas de penetración, auditorías de ciberseguridad o certificaciones de cumplimiento.</li><li>Puesta en producción, capacitación masiva o gestión integral del cambio.</li><li>Soporte operativo posterior o mantenimiento de soluciones tecnológicas.</li><li>Todo desarrollo será dimensionado en una Propuesta Técnico-Económica posterior.</li></ul></div>
+</section>
+
+</main>
+<script>
+const navItems = document.querySelectorAll('.nav-item');
+const sections = document.querySelectorAll('.section');
+navItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const tab = item.dataset.tab;
+    navItems.forEach(n => n.classList.remove('active'));
+    sections.forEach(s => s.classList.remove('active'));
+    item.classList.add('active');
+    const sec = document.getElementById('tab-' + tab);
+    if (sec) sec.classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+const phaseTabs = document.querySelectorAll('#phaseTabs .ftab');
+const phasePanels = document.querySelectorAll('.phase-panel');
+phaseTabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    const phase = tab.dataset.phase;
+    phaseTabs.forEach(t => t.classList.remove('active'));
+    phasePanels.forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    const panel = document.getElementById('phase-' + phase);
+    if (panel) panel.classList.add('active');
+  });
+});
+</script>
+</body>
+</html>
